@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0mhd253" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn">
+  <bpmn:process id="process-variable" name="Variable process" isExecutable="true">
+    <bpmn:extensionElements />
+    <bpmn:startEvent id="StartingProcessEvent" name="Starting process">
+      <bpmn:extensionElements />
+      <bpmn:outgoing>Flow_1jqrnpa</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="ProcessCompletedEvent" name="Process completed">
+      <bpmn:incoming>Flow_02sa69g</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02sa69g" sourceRef="ProcessingVariableActivityService" targetRef="ProcessCompletedEvent" />
+    <bpmn:serviceTask id="ProcessingVariableActivityService" name="Processing variable"
+                      camunda:delegateExpression="${processingVariableDelegate}">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="process-variable" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1i6blng</bpmn:incoming>
+      <bpmn:outgoing>Flow_02sa69g</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1jqrnpa" sourceRef="StartingProcessEvent" targetRef="inputing-variable-activity" />
+    <bpmn:sequenceFlow id="Flow_1i6blng" sourceRef="inputing-variable-activity" targetRef="ProcessingVariableActivityService" />
+    <bpmn:userTask id="inputing-variable-activity" name="Inputing variable" camunda:formKey="camunda-forms:app:forms/input-variable-form.form">
+      <bpmn:extensionElements>
+        <camunda:taskListener event="create" expression="${inputtingVariablesActivityService.processOnCreateEvent(task)}"/>
+        <camunda:taskListener event="complete" expression="${inputtingVariablesActivityService.processOnCompleteEvent(task)}"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1jqrnpa</bpmn:incoming>
+      <bpmn:outgoing>Flow_1i6blng</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process-variable">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartingProcessEvent">
+        <dc:Bounds x="182" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="161" y="135" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bfz8r0_di" bpmnElement="ProcessCompletedEvent">
+        <dc:Bounds x="682" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="675" y="135" width="51" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0j7zagy_di" bpmnElement="ProcessingVariableActivityService">
+        <dc:Bounds x="510" y="70" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19xgt8j_di" bpmnElement="inputing-variable-activity">
+        <dc:Bounds x="310" y="70" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_02sa69g_di" bpmnElement="Flow_02sa69g">
+        <di:waypoint x="610" y="110" />
+        <di:waypoint x="682" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jqrnpa_di" bpmnElement="Flow_1jqrnpa">
+        <di:waypoint x="218" y="110" />
+        <di:waypoint x="310" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i6blng_di" bpmnElement="Flow_1i6blng">
+        <di:waypoint x="410" y="110" />
+        <di:waypoint x="510" y="110" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

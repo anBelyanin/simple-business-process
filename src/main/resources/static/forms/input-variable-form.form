@@ -1,0 +1,25 @@
+{
+  "components": [
+    {
+      "label": "Input variable",
+      "type": "textfield",
+      "id": "Field_1v1qunw",
+      "key": "input-variable-text-area",
+      "validate": {
+        "minLength": 1,
+        "maxLength": 10,
+        "required": true
+      },
+      "disabled": false
+    }
+  ],
+  "type": "default",
+  "id": "input-variable-form",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.1.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.6.0"
+  },
+  "schemaVersion": 5
+}
